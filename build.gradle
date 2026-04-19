@@ -1,0 +1,62 @@
+plugins {
+	id 'com.github.johnrengelman.shadow' version '8.1.1'
+	id 'java'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.ow2.asm:asm:9.9'
+	testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+}
+
+tasks.withType(JavaCompile) {
+	options.release = 8
+	options.deprecation = true
+}
+
+def buildNumber = System.getenv('AI_BUILD_NUMBER')
+version = System.getenv('AI_VERSION_NUMBER') ?: 'snapshot';
+
+jar {
+	manifest {
+		attributes (
+			'Implementation-Title': project.name,
+			'Implementation-Version': project.version,
+			'Implementation-Vendor': 'yushijinhun',
+			'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+			'Automatic-Module-Name': 'moe.yushi.authlibinjector',
+			'Premain-Class': 'moe.yushi.authlibinjector.Premain',
+			'Agent-Class': 'moe.yushi.authlibinjector.Premain',
+			'Can-Retransform-Classes': true,
+			'Can-Redefine-Classes': true,
+			'Git-Commit': 'unknown',
+			'Git-IsClean': false,
+			'Build-Number': buildNumber?:'-1'
+		)
+	}
+}
+
+processResources {
+	from('LICENSE') {
+		rename('LICENSE', 'authlib-injector.txt')
+		into 'META-INF/licenses'
+	}
+}
+
+test {
+	useJUnitPlatform()
+}
+
+shadowJar {
+	archiveClassifier.set(null)
+
+	exclude 'META-INF/maven/**'
+	exclude 'module-info.class'
+
+	relocate 'org.objectweb.asm', 'moe.yushi.authlibinjector.internal.org.objectweb.asm'
+}
+
+defaultTasks 'clean', 'shadowJar'
