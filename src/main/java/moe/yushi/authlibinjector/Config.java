@@ -67,6 +67,7 @@ public final class Config {
 	public static boolean agentaSkinResize;
 	public static boolean agentaSkinMerge;
 	public static boolean agentaSkinCache;
+	public static boolean agentaSkinHd;
 	public static String agentaAssetsFmlUrl;
 	public static String agentaSaveFile;
 
@@ -192,6 +193,7 @@ public final class Config {
 		agentaSkinResize = Boolean.parseBoolean(System.getProperty("authlibinjector.agenta.skin.resize", "true"));
 		agentaSkinMerge = Boolean.parseBoolean(System.getProperty("authlibinjector.agenta.skin.merge", "true"));
 		agentaSkinCache = Boolean.parseBoolean(System.getProperty("authlibinjector.agenta.skin.cache", "true"));
+		agentaSkinHd = Boolean.parseBoolean(System.getProperty("authlibinjector.agenta.skin.hd", "true"));
 		agentaAssetsFmlUrl = System.getProperty("authlibinjector.agenta.assets.fml", "").trim();
 		agentaSaveFile = System.getProperty("authlibinjector.agenta.save.file", "saves.json");
 	}

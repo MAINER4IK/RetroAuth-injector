@@ -65,6 +65,7 @@ import moe.yushi.authlibinjector.transform.support.BungeeCordProfileKeyTransform
 import moe.yushi.authlibinjector.transform.support.CitizensTransformer;
 import moe.yushi.authlibinjector.transform.support.ConcatenateURLTransformUnit;
 import moe.yushi.authlibinjector.transform.support.ConstantURLTransformUnit;
+import moe.yushi.authlibinjector.transform.support.ImageBufferDownloadTransformUnit;
 import moe.yushi.authlibinjector.transform.support.MC52974Workaround;
 import moe.yushi.authlibinjector.transform.support.MC52974_1710Workaround;
 import moe.yushi.authlibinjector.transform.support.MainArgumentsTransformer;
@@ -291,6 +292,7 @@ public final class AuthlibInjector {
 		transformer.units.add(new ConstantURLTransformUnit(urlProcessor));
 		transformer.units.add(new CitizensTransformer());
 		transformer.units.add(new ConcatenateURLTransformUnit());
+		transformer.units.add(new ImageBufferDownloadTransformUnit());
 
 		boolean usernameCheckDefault = Boolean.TRUE.equals(config.getMeta().get("feature.username_check"));
 		if (Config.usernameCheck.isEnabled(usernameCheckDefault)) {

@@ -37,6 +37,7 @@ build/libs/retroauth-injector-<version>.jar
 -Dauthlibinjector.agenta.skin.resize=true|false
 -Dauthlibinjector.agenta.skin.merge=true|false
 -Dauthlibinjector.agenta.skin.cache=true|false
+-Dauthlibinjector.agenta.skin.hd=true|false
 -Dauthlibinjector.agenta.assets.fml=<url>
 -Dauthlibinjector.agenta.save.file=<path>
 ```

@@ -29,8 +29,6 @@ import static moe.yushi.authlibinjector.util.Logging.Level.DEBUG;
 import static moe.yushi.authlibinjector.util.Logging.Level.INFO;
 import static moe.yushi.authlibinjector.util.Logging.log;
 
-import java.awt.AlphaComposite;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -146,23 +144,7 @@ public class LegacySkinAPIFilter implements URLFilter {
             return rawPng;
         }
 
-        BufferedImage skin = source;
-
-        if (Config.agentaSkinMerge) {
-            BufferedImage merged = new BufferedImage(skin.getWidth(), skin.getHeight(), BufferedImage.TYPE_INT_ARGB);
-            Graphics2D g2d = merged.createGraphics();
-            g2d.drawImage(skin, 0, -16, null);
-            g2d.setComposite(AlphaComposite.Clear);
-            g2d.fillRect(0, 0, 64, 16);
-            g2d.setComposite(AlphaComposite.DstOver);
-            g2d.drawImage(skin, 0, 0, null);
-            g2d.dispose();
-            skin = merged;
-        }
-
-        if (Config.agentaSkinResize) {
-            skin = skin.getSubimage(0, 0, 64, 32);
-        }
+        BufferedImage skin = LegacySkinProcessor.processSkin(source);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         ImageIO.write(skin, "png", out);
