@@ -1,6 +1,6 @@
 # retroauth-injector
 
-`retroauth-injector` is a Java Agent for legacy Minecraft versions, combining ideas from `authlib-injector` and `Agenta`.
+`retroauth-injector` is a Java Agent for legacy Minecraft versions, combining ideas from `authlib-injector`, `Agenta` and `CustomSkinLoader` .
 
 ## Features
 
@@ -48,3 +48,4 @@ All standard `authlib-injector` options remain available.
 
 - Agenta: https://github.com/Hanro50/Agenta
 - authlib-injector: https://github.com/yushijinhun/authlib-injector
+- CustomSkinLoader: https://github.com/xfl03/MCCustomSkinLoader
