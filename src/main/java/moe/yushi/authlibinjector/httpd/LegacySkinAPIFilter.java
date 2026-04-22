@@ -135,6 +135,9 @@ public class LegacySkinAPIFilter implements URLFilter {
     }
 
     private byte[] processLegacySkin(byte[] rawPng) throws IOException {
+        if (!Config.shouldApplyLegacySkinProcessing()) {
+            return rawPng;
+        }
         if (!Config.agentaSkinMerge && !Config.agentaSkinResize) {
             return rawPng;
         }

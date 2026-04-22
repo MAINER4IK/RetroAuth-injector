@@ -289,6 +289,10 @@ public final class AuthlibInjector {
 		}
 
 		transformer.units.add(new MainArgumentsTransformer());
+		MainArgumentsTransformer.getVersionSeriesListeners().add(versionSeries -> {
+			Config.detectedVersionSeries = versionSeries;
+			log(INFO, "Version series for legacy skin processing: " + versionSeries);
+		});
 		transformer.units.add(new ConstantURLTransformUnit(urlProcessor));
 		transformer.units.add(new CitizensTransformer());
 		transformer.units.add(new ConcatenateURLTransformUnit());
