@@ -70,6 +70,7 @@ public final class Config {
 	public static boolean agentaSkinHd;
 	public static String agentaAssetsFmlUrl;
 	public static String agentaSaveFile;
+	public static String detectedVersionSeries;
 
 	private static void initDebugOptions() {
 		String prop = System.getProperty("authlibinjector.debug");
@@ -196,5 +197,25 @@ public final class Config {
 		agentaSkinHd = Boolean.parseBoolean(System.getProperty("authlibinjector.agenta.skin.hd", "true"));
 		agentaAssetsFmlUrl = System.getProperty("authlibinjector.agenta.assets.fml", "").trim();
 		agentaSaveFile = System.getProperty("authlibinjector.agenta.save.file", "saves.json");
+		detectedVersionSeries = null;
+	}
+
+	public static boolean shouldApplyLegacySkinProcessing() {
+		if (detectedVersionSeries == null) {
+			return true;
+		}
+		String[] parts = detectedVersionSeries.split("\\.");
+		if (parts.length >= 2) {
+			try {
+				int major = Integer.parseInt(parts[0]);
+				int minor = Integer.parseInt(parts[1]);
+				if (major == 1 && minor < 8) {
+					return true;
+				}
+			} catch (NumberFormatException e) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

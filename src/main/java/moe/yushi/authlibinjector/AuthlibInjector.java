@@ -41,6 +41,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 import moe.yushi.authlibinjector.httpd.AntiFeaturesFilter;
 import moe.yushi.authlibinjector.httpd.DefaultURLRedirector;
@@ -289,6 +290,10 @@ public final class AuthlibInjector {
 		}
 
 		transformer.units.add(new MainArgumentsTransformer());
+		MainArgumentsTransformer.getVersionSeriesListeners().add(versionSeries -> {
+			Config.detectedVersionSeries = versionSeries;
+			log(INFO, "Version series for legacy skin processing: " + versionSeries);
+		});
 		transformer.units.add(new ConstantURLTransformUnit(urlProcessor));
 		transformer.units.add(new CitizensTransformer());
 		transformer.units.add(new ConcatenateURLTransformUnit());

@@ -144,6 +144,11 @@ public class ImageBufferDownloadTransformUnit implements TransformUnit {
 			return null;
 		}
 
+		// Don't process for 1.8+ (new skin format)
+		if (!Config.shouldApplyLegacySkinProcessing()) {
+			return source;
+		}
+
 		BufferedImage processed = LegacySkinProcessor.processSkin(source, Config.agentaSkinHd);
 		int scale = Math.max(1, Math.min(processed.getWidth() / 64, processed.getHeight() / 32));
 		int width = Math.max(64, scale * 64);
