@@ -44,6 +44,7 @@ import java.util.Set;
 import java.util.stream.Stream;
 import moe.yushi.authlibinjector.httpd.AntiFeaturesFilter;
 import moe.yushi.authlibinjector.httpd.DefaultURLRedirector;
+import moe.yushi.authlibinjector.httpd.DiscoveryFilter;
 import moe.yushi.authlibinjector.httpd.LegacySkinAPIFilter;
 import moe.yushi.authlibinjector.httpd.LegacyResourcesFilter;
 import moe.yushi.authlibinjector.httpd.ProfileKeyFilter;
@@ -271,6 +272,8 @@ public final class AuthlibInjector {
 
 		filters.add(new PublickeysFilter());
 
+		filters.add(new DiscoveryFilter());
+
 		return filters;
 	}
 
@@ -384,5 +387,9 @@ public final class AuthlibInjector {
 			return Optional.empty();
 		}
 		return processor.transformURL(inputUrl);
+	}
+
+	public static URLProcessor getURLProcessor() {
+		return urlProcessor;
 	}
 }
