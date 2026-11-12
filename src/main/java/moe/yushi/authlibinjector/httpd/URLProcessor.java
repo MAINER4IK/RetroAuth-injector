@@ -28,7 +28,6 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.Proxy;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -185,9 +184,7 @@ public class URLProcessor {
 
 		log(DEBUG, "Reverse proxy: > " + method + " " + url + ", headers: " + requestHeaders);
 
-		// Reverse proxy must bypass authlib-injector's global URL interception,
-		// otherwise handled Mojang URLs can loop back into the local HTTP server.
-		HttpURLConnection conn = openUpstreamConnection(url);
+		HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection(Proxy.NO_PROXY);
 		conn.setRequestMethod(method);
 		conn.setDoOutput(clientIn != null);
 		requestHeaders.forEach(conn::setRequestProperty);
@@ -250,14 +247,4 @@ public class URLProcessor {
 		return response;
 	}
 
-	private static HttpURLConnection openUpstreamConnection(String url) throws IOException {
-		URL upstream = new URL(url);
-		String bridgeProtocol = "https".equalsIgnoreCase(upstream.getProtocol()) ? "forwards" : "forward";
-		URL bridged = new URL(bridgeProtocol, upstream.getHost(), upstream.getPort(), upstream.getFile());
-		URLConnection connection = bridged.openConnection(Proxy.NO_PROXY);
-		if (!(connection instanceof HttpURLConnection)) {
-			throw new IOException("Unsupported upstream connection type: " + connection.getClass().getName());
-		}
-		return (HttpURLConnection) connection;
-	}
 }

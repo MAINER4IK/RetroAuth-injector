@@ -21,7 +21,6 @@ import static moe.yushi.authlibinjector.util.Logging.Level.DEBUG;
 import static moe.yushi.authlibinjector.util.Logging.Level.ERROR;
 import static moe.yushi.authlibinjector.util.Logging.Level.INFO;
 import java.lang.instrument.Instrumentation;
-import moe.yushi.authlibinjector.legacy.LegacyURLStreamHandlerFactory;
 
 public final class Premain {
 	private Premain() {}
@@ -50,7 +49,6 @@ public final class Premain {
 	}
 
 	private static void initInjector(String arg, Instrumentation instrumentation, boolean retransform) {
-		LegacyURLStreamHandlerFactory.tryInstall();
 		AuthlibInjector.bootstrap(instrumentation, arg);
 
 		if (retransform) {

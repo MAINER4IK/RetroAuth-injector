@@ -381,14 +381,6 @@ public final class AuthlibInjector {
 		return classTransformer;
 	}
 
-	public static Optional<String> transformURLForLegacy(String inputUrl) {
-		URLProcessor processor = urlProcessor;
-		if (processor == null) {
-			return Optional.empty();
-		}
-		return processor.transformURL(inputUrl);
-	}
-
 	public static URLProcessor getURLProcessor() {
 		return urlProcessor;
 	}
