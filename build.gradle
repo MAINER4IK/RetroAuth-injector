@@ -13,6 +13,7 @@ dependencies {
 }
 
 tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
 	options.release = 8
 	options.deprecation = true
 }
@@ -48,6 +49,10 @@ processResources {
 
 test {
 	useJUnitPlatform()
+	dependsOn shadowJar
+	doFirst {
+		systemProperty 'test.agentJar', tasks.shadowJar.archiveFile.get().asFile.absolutePath
+	}
 }
 
 shadowJar {
